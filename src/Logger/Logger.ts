@@ -13,31 +13,39 @@ export const getTime = (configuration: LoggerTimeConfig): string => {
 	// Format: <Month In Name> the <Day>th in <Year> @ <Time> <AM/PM>
 	const format = "MMMM [the] Do [in] YYYY [@] h:mm:ss A";
 
-	if (configuration.of_now === true) return moment(Date.now()).format(format);
-	else if (configuration.of_now === false) {
+	if (configuration.of_now === false) {
 		if (!configuration.else) throw new Error("[ERROR : TIME_CONVERTER] The 'else' parameter in the getTime() function configuration must be equal to a valid Date number");
 
 		return moment(configuration.else).format(format);
-	}
+	} else return moment(Date.now()).format(format);
 };
 
 const defineStateColor = (state: LoggerStatusType): string => {
-	switch (state) {
+	let coloredState: string = "";
+    
+    switch (state) {
 		case LoggerStatus.INFO:
-			return dim(greenBright(state));
+			coloredState = dim(greenBright(state));
+            break;
 
         case LoggerStatus.DEBUG:
-			return green(state);
+			coloredState = green(state);
+            break;
 
         case LoggerStatus.WARN:
-			return dim(yellowBright(state));
+			coloredState = dim(yellowBright(state));
+            break;
 
         case LoggerStatus.ERROR:
-			return redBright(state);
+			coloredState = redBright(state);
+            break;
 
         case LoggerStatus.FATAL:
-			return red(state);
+			coloredState = red(state);
+            break;
 	}
+
+    return coloredState;
 };
 
 const loggerPrefix = (state: LoggerStatusType): string => {
@@ -60,19 +68,21 @@ export const Logger = {
         process.stdout.write(`${loggerPrefix(LoggerStatus.INFO)} ${stripIndents(message.join(" "))}`);
     },
 
-    debug: () => {
-        process.stdout.write(`${loggerPrefix(state)} ${stripIndents(message.join(" "))}`);
+    debug: (...message: any[]) => {
+        process.stdout.write(`${loggerPrefix(LoggerStatus.DEBUG)} ${stripIndents(message.join(" "))}`);
     },
 
-    warn: () => {
-        process.stdout.write(`${loggerPrefix(state)} ${stripIndents(message.join(" "))}`);
+    warn: (...message: any[]) => {
+        process.stdout.write(`${loggerPrefix(LoggerStatus.WARN)} ${stripIndents(message.join(" "))}`);
     },
 
-    error: () => {
-        process.stdout.write(`${loggerPrefix(state)} ${stripIndents(message.join(" "))}`);
+    error: (...message: any[]) => {
+        process.stdout.write(`${loggerPrefix(LoggerStatus.ERROR)} ${stripIndents(message.join(" "))}`);
     },
 
-    fatal: () => {
-        process.stdout.write(`${loggerPrefix(state)} ${stripIndents(message.join(" "))}`);
+    fatal: (...message: any[]) => {
+        process.stdout.write(`${loggerPrefix(LoggerStatus.FATAL)} ${stripIndents(message.join(" "))}`);
+        
+        process.exit(1);
     }
 };
