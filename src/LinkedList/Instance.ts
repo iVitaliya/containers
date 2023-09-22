@@ -9,12 +9,11 @@ class LinkedList<T> implements Iterable<T> {
     }
 
     /*****************************************************************************
-                                  INSPECTION
+                                     INSPECTION
     *****************************************************************************/
     /** 
-     * Returns the size of the Linked List - O(1) 
-     * @returns {number} */
-    get size(): number {
+     * Returns the size of the Linked List - O(1)  */
+    public get size(): number {
         if (this.list) return this.list.size;
 
         return 0;
@@ -22,17 +21,17 @@ class LinkedList<T> implements Iterable<T> {
 
     /**
      * Returns `true` if the Linked List has been found empty, `false` otherwise - O(1) */
-    get isEmpty(): boolean {
+    public get isEmpty(): boolean {
         return !this.list;
     }
 
     /*****************************************************************************
-                                  INSERTION
+                                      INSERTION
     *****************************************************************************/
     /**
      * Adds a [Node]({@link Node.ts}) to the head of the LinkedList - O(1)
      * @param value - The value to add to the List. */
-    addFront(value: T): boolean {
+    public addFront(value: T): boolean {
         const newNode = new LinkedListNode<T>(value);
 
         if (this.list) {
@@ -58,7 +57,7 @@ class LinkedList<T> implements Iterable<T> {
     /**
      * Adds a [Node]({@link Node.ts}) to the tail of the LinkedList - O(1)
      * @param value - The value to add to the list. */
-    addBack(value: T): boolean {
+    public addBack(value: T): boolean {
         const newNode = new LinkedListNode<T>(value);
 
         if (this.list) {
@@ -85,7 +84,7 @@ class LinkedList<T> implements Iterable<T> {
      * Adds a [Node]({@link Node.ts}) at specified index - O(1)
      * @param index - The index on where to add specified value.
      * @param value - The value to add at said index. */
-    addAt(index: number, value: T): boolean {
+    public addAt(index: number, value: T): boolean {
         if (index === 0) {
             return this.addFront(value);
         }
@@ -118,5 +117,55 @@ class LinkedList<T> implements Iterable<T> {
         return true;
     }
 
-    // https://github.com/jeffzh4ng/iruka/blob/master/src/data-structures/sequences/linked-list/linked-list.ts#L139
+    /*****************************************************************************
+                                   ACCESSING
+    *****************************************************************************/
+    /** 
+     * Gets the value of the head of the current [Node]({@link Node.ts}) - O(1) */
+    public peekFront(): T | null {
+        if (!this.list) return null;
+
+        return this.list.head.value;
+    }
+
+    /**
+     * Gets the value of the tail of the current [Node]({@link Node.ts}) - O(1) */
+    public peekBack(): T | null {
+        if (!this.list) return null;
+
+        return this.list.tail.value;
+    }
+
+    /**
+     * Gets the element at the specified index - O(1)
+     * @param index - The index to use for getting the [Node]({@link Node.ts}) */
+    public get(index: number): T | null {
+        if (index < 0 || index >= this.size || !this.list) {
+            return null;
+        }
+
+        let i = 0;
+        let current = this.list.head;
+
+        while (i < index) {
+            current = current.next!;
+            
+            i++;
+        }
+
+        return current.value;
+    }
+
+    /*****************************************************************************
+                                      SEARCHING
+    *****************************************************************************/
+    /**
+     * Removes the first occurrence of the specified item in the LinkedList.
+     * @param value - The value to search for.
+     * @returns The index of the first occurrence of the element, and -1
+     * if the element doesn't seem to exist in the List. */
+    public indexOf(value: T): number {
+        // List is empty.
+        if (!this.list) return -1;
+    }
 }
