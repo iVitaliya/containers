@@ -4,10 +4,10 @@ export interface EqualsFunction<T> {
 }
 
 /**
- * Function signature for comparing
- * > 0 => a is larger than b
- * = 0 => a equals b
- * < 0 => a is smaller than b */
+ * Function signature for comparing.
+ * > 0 => a is larger than b.
+ * = 0 => a equals b.
+ * < 0 => a is smaller than b. */
 export interface CompareFunction<T> {
     (a: T, b: T): number;
 }

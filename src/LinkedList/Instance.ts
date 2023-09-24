@@ -6,19 +6,19 @@ import { defaultEquals } from "../Utilities";
 
 class LinkedList<T> implements Iterable<T> {
     private list: List<T> | undefined;
-    private equalsF: EqualsFunction<T> = defaultEquals;
+    private equalsFunc: EqualsFunction<T> = defaultEquals;
 
     constructor(equalsFunction?: EqualsFunction<T>) {
         this.list = undefined;
 
-        if (equalsFunction) this.equalsF = equalsFunction;
+        if (equalsFunction) this.equalsFunc = equalsFunction;
     }
 
     /*****************************************************************************
                                      INSPECTION
     *****************************************************************************/
     /** 
-     * @returns the size of the Linked List - O(1)  */
+     * @returns the size of the Linked List. - O(1) */
     public get size(): number {
         if (this.list) return this.list.size;
 
@@ -26,7 +26,7 @@ class LinkedList<T> implements Iterable<T> {
     }
 
     /**
-     * @returns `true` if the Linked List has been found empty, `false` otherwise - O(1) */
+     * @returns `true` if the Linked List has been found empty, `false` otherwise. - O(1) */
     public get isEmpty(): boolean {
         return !this.list;
     }
@@ -35,7 +35,7 @@ class LinkedList<T> implements Iterable<T> {
                                       INSERTION
     *****************************************************************************/
     /**
-     * Adds a [Node]({@link Node.ts}) to the head of the LinkedList - O(1)
+     * Adds a Node to the head of the LinkedList. - O(1)
      * @param value - The value to add to the List. */
     public addFront(value: T): boolean {
         const newNode = new LinkedListNode<T>(value);
@@ -61,7 +61,7 @@ class LinkedList<T> implements Iterable<T> {
     }
 
     /**
-     * Adds a [Node]({@link Node.ts}) to the tail of the LinkedList - O(1)
+     * Adds a Node to the tail of the LinkedList. - O(1)
      * @param value - The value to add to the list. */
     public addBack(value: T): boolean {
         const newNode = new LinkedListNode<T>(value);
@@ -87,7 +87,7 @@ class LinkedList<T> implements Iterable<T> {
     }
 
     /**
-     * Adds a [Node]({@link Node.ts}) at specified index - O(1)
+     * Adds a Node at specified index. - O(1)
      * @param index - The index on where to add specified value.
      * @param value - The value to add at said index. */
     public addAt(index: number, value: T): boolean {
@@ -127,7 +127,7 @@ class LinkedList<T> implements Iterable<T> {
                                    ACCESSING
     *****************************************************************************/
     /** 
-     * Gets the value of the head of the current [Node]({@link Node.ts}) - O(1) */
+     * Gets the value of the head of the current Node. - O(1) */
     public peekFront(): T | null {
         if (!this.list) return null;
 
@@ -135,7 +135,7 @@ class LinkedList<T> implements Iterable<T> {
     }
 
     /**
-     * Gets the value of the tail of the current [Node]({@link Node.ts}) - O(1) */
+     * Gets the value of the tail of the current Node. - O(1) */
     public peekBack(): T | null {
         if (!this.list) return null;
 
@@ -143,8 +143,8 @@ class LinkedList<T> implements Iterable<T> {
     }
 
     /**
-     * Gets the element at the specified index - O(1)
-     * @param index - The index to use for getting the [Node]({@link Node.ts}) */
+     * Gets the element at the specified index. - O(1)
+     * @param index - The index to use for getting the Node. */
     public get(index: number): T | null {
         if (index < 0 || index >= this.size || !this.list) {
             return null;
@@ -177,8 +177,8 @@ class LinkedList<T> implements Iterable<T> {
         let index = 0;
         let current = this.list.head;
 
-        while (!this.equalsF(current.value!, value)) {
-            // current.value === null means we reached end of list without finding element
+        while (!this.equalsFunc(current.value!, value)) {
+            // current.value === null means we reached end of list without finding element.
             if (!current.next) return -1;
 
             current = current.next;
@@ -189,9 +189,9 @@ class LinkedList<T> implements Iterable<T> {
     }
 
     /**
-     * Checks if the value is in the LinkedList.
+     * Checks if the specified value exists in the LinkedList.
      * @param value - The value to search for.
-     * @returns whether */
+     * @returns whether or not the specified value exists in the LinkedList. */
     public contains(value: T): boolean {
         const index = this.indexOf(value);
 
@@ -202,7 +202,7 @@ class LinkedList<T> implements Iterable<T> {
                                       DELETION
     *****************************************************************************/
     /**
-     * Removes head - O(1)
+     * Removes the head from the LinkedList. - O(1)
      * @returns the value of removed head. */
     public removeFront(): T | null {
         if (!this.list) return null;
@@ -226,7 +226,7 @@ class LinkedList<T> implements Iterable<T> {
     }
 
     /**
-     * Removes tail - O(1)
+     * Removes the tail from the LinkedList. - O(1)
      * @returns the value of removed tail. */
     public removeBack(): T | null {
         if (!this.list) return null;
@@ -249,10 +249,10 @@ class LinkedList<T> implements Iterable<T> {
     }
 
     /**
-     * Removes first occurence of the [Node]({@link Node.ts}) with specified value. Returns true if
+     * Removes first occurence of the Node with specified value. Returns true if
      * the removal was successful, and false otherwise. - O(n)
      * @param value - The value to remove.
-     * @returns the value of the removed [Node]({@link Node.ts}). */
+     * @returns the value of the removed Node. */
     public remove(value: T): T | null {
         const index = this.indexOf(value); // O(n)
 
@@ -262,9 +262,9 @@ class LinkedList<T> implements Iterable<T> {
     }
 
     /**
-     * Removes the [Node]({@link Node.ts}) at the specified index.
+     * Removes the Node at the specified index.
      * @param index - The index to remove.
-     * @returns the value of the removed [Node]({@link Node.ts}). */
+     * @returns the value of the removed Node. */
     public removeAt(index: number): T | null {
         if (!this.list) return null;
 
@@ -295,7 +295,8 @@ class LinkedList<T> implements Iterable<T> {
         return current.value;
     }
 
-    /** Deletes all the registered [Nodes]({@link Node.ts}) - O(1) */
+    /** 
+     * Deletes all the registered Nodes. - O(1) */
     public clear(): void {
         this.list = undefined;
     }
@@ -303,7 +304,8 @@ class LinkedList<T> implements Iterable<T> {
     /*****************************************************************************
                                       HELPERS
     *****************************************************************************/
-    /** Appends values from an Array to the List - O(k) */
+    /** 
+     * Appends values from an Array to the List. - O(k) */
     public fromArray(array: T[]): LinkedList<T> {
         for (const element of array) {
             this.addBack(element);
