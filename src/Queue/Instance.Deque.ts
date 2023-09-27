@@ -95,3 +95,5 @@ class Deque<T> implements Iterable<T> {
         return this.list[Symbol.iterator]();
     }
 }
+
+export default Deque;
